@@ -16,7 +16,7 @@ The loss function used as of now remains a hinge loss for pointwise-ranking whic
                     
             return loss
 
-## Case I: L2 Regularization or Ridge Regularization
+## __Case I: L2 Regularization or Ridge Regularization__
 Is it possible that the penalties for scores which are higher than the user-selected one (ie on the wrong side of the separating hyperplane) must be penalized further? Regularization may be the solution for this. Regularization adds a term to the loss function of the problem.
 
 L2 regularization forces the weights to be small but does not make them zero and does non sparse solution. However, it is not nobust to outliers. In this case, outliers donot make much of a difference, since if a user tries to visit a webpage he rarely visits / has not visited, he's most likely to type out the address himself.
@@ -25,11 +25,7 @@ Ridge regression performs better when all the input features influence the outpu
 
 If zero-weights are desired, we can use elastic net which is a regularized regression method that linearly combines the L1 and L2 penalties of the lasso and ridge methods. Moreover Elastic Net can be reduced to the linear support vector machine.
 
-^ More on this to be added
-
-### **__Doubt:__** Number of considered visits (10): If this number increases too much, it would hurt performance. (Nevermind, figured this out) <- Look at this variable later properly
-
-## Case II
+## __Case II__
 
 The variables (22) which are to be optimized are: 
   - firstBucketCutoff
@@ -59,10 +55,31 @@ The optimization process is started from the current set of values and then impr
 
 Some other variables which can be utilized without modifying any prior data collection methods are:
 
-- s
-- d
+- Bonus for Already Open Tabs
+- Bonus for session lengths
 
-## Case III: Frecency Modification (maybe out of scope)
-Is it possible to perhaps get time spent on the webpage? For example, Facebook is a website on which people spend a lot of time on. Might be possible to add that to the frecency score.
+[This link](https://github.com/mozilla/legal-docs/blob/master/firefox_privacy_notice/en-US.md) confirms that session lengths are also collected which might prove to be useful with respect to suggesting better predictions when utilized with frecency.
 
-## Case IV: Delta values
+`< Need to look into more >`
+
+Gather time-related statistics based on training with more number of considered visits (ie, greater than 10 or if lesser number is also enough)?
+
+
+## __Case III: Delta values__ (out of scope?)
+The loss function as of now tries to maximize the margin between correct classification and all other wrong classifications. This means the decision boundary (delta here) tries to be as furthest away from the nearest user-selected output.
+
+This is nothing but the c parameter in SVMs. C is a regularization parameter that controls the trade off between the achieving a low training error and a low testing error that is the ability to generalize your classifier to unseen data. 
+
+Optimizing c involves cross-validation, etc. Would this be a useful thing to add/pursue?
+
+# Note to the mentors
+Hey!
+I'm Deepti Mahesh, an Outreachy applicant from India. I'm truly sorry that I introduced myself this late and took this long to get in touch with you but recent circumstances with the pandemic have turned my academic life and family arrangements topsy-turvy.
+
+I did my reading however, and wanted to be sure I had something substansial to present before I added you to the repo. I understand you'll now proceed to tell me where to improve and focus on? 
+
+Thank you!
+
+## References:
+- Provided Links: https://florian.github.io/federated-learning-firefox/
+- Github: https://github.com/florian/federated-learning/

@@ -94,7 +94,9 @@ Optimizing c involves cross-validation, etc. Would this be a useful thing to add
 
 * Gather __time-related statistics__ based on training with more or less number of considered visits (ie, greater than 10 or if lesser number is also enough)?
 
-* More optimizations on delta <- needs to be explored more
+* More optimizations on delta ie, hyperparameter tuning has many approaches including some like gridSearch and Bayesian Optimization (not to mention CV).
+
+    `Need to explore more`
 
 ## Note to the mentors
 

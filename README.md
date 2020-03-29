@@ -17,7 +17,7 @@ The loss function used as of now remains a hinge loss for pointwise-ranking whic
                 
         return loss
 
-### __Case I: L2 Regularization or Ridge Regularization__
+## __Case I: L2 Regularization or Ridge Regularization__
 
 Is it possible that the penalties for scores which are higher than the user-selected one (ie on the wrong side of the separating hyperplane) must be penalized further? Regularization may be the solution for this. Regularization adds a term to the loss function of the problem.
 
@@ -27,20 +27,20 @@ Ridge regression performs better when all the input features influence the outpu
 
 If zero-weights are desired, we can use elastic net which is a regularized regression method that linearly combines the L1 and L2 penalties of the lasso and ridge methods. Moreover Elastic Net can be reduced to the linear support vector machine.
 
-#### Edits Made
+### __Edits Made__
 
 1. __Why Regularization?__
-    * With larger and more complex models such as what this problem uses, overfitting is a known consequence. Regularization attempts to reduce the variance of the estimator by simplifying it, which increases the bias, in such a way that the expected error decreases. Moeover, the number of samples / user data is small.
+    * With larger and more complex models such as what this problem uses, __overfitting__ is a known consequence. Regularization attempts to reduce the variance of the estimator by simplifying it, which increases the bias, in such a way that the expected error decreases. Moeover, the number of samples / user data is small.
 
       The regularisation terms are constraints by which an optimisation algorithm must adhere to when minimising the loss function, apart from doing what was being optimized before.
-    * Penalize weights that are large such that more bias is not given to some bonuses which would lead to very incorrect answers as we do not want to assume that the user for example only visits bookmarked sites. At some point, the penalty of having too large will outweigh whatever gain made in the loss function.
+    * Penalize weights that are large such that more bias is not given to some bonuses. If this bias existed it would lead to very incorrect answers as we do not want to assume that the user for example only visits bookmarked sites. At some point, the penalty of having too large will outweigh whatever gain made in the loss function.
 
 2. __Ridge Regularization and User Behavior__
     * A lot of our bonuses might alerady be zero since most users do not typically bookmark some websites, etc. Thus, we regularize it in such a way that __no other bonuses is reduced to a zero__. L2 regularization is used.
     * Moreover we do not have a very large number of weights which also makes the loss function not too complex. Thus, Lasso / L1 may seem like a bit of overkill.
-    * Moreover L1 is influenced only by sign of the weights whereas L2 is affected by magnitude, and doubling of the regularization parameter (during gradient descent) and since our weignts are never assigned a non-zero value (we never want to assume that the users will NOT visit a site),, L2 is considered a better solution in this case.
+    * Moreover L1 is influenced only by sign of the weights whereas L2 is affected by magnitude, and doubling of the regularization parameter (during gradient descent) and since our weignts are never assigned a non-zero value (we never want to assume that the users will NOT visit a site), L2 is considered a better solution in this case.
 
-### __Case II__ (ruled as out of scope)
+## __Case II: Additional Variables__
 
 The variables (22) which are to be optimized are:
 
@@ -76,17 +76,25 @@ Some other variables which can be utilized without modifying any prior data coll
 
 [This link](https://github.com/mozilla/legal-docs/blob/master/firefox_privacy_notice/en-US.md) confirms that session lengths are also collected which might prove to be useful with respect to suggesting better predictions when utilized with frecency.
 
-`< Need to look into more >`
+### __Edits made__
 
-Gather time-related statistics based on training with more number of considered visits (ie, greater than 10 or if lesser number is also enough)?
+`ruled as out of scope`
 
-### __Case III: Delta values__ (out of scope?)
+## __Case III: Delta values__
 
 The loss function as of now tries to maximize the margin between correct classification and all other wrong classifications. This means the decision boundary (delta here) tries to be as furthest away from the nearest user-selected output.
 
 This is nothing but the c parameter in SVMs. C is a regularization parameter that controls the trade off between the achieving a low training error and a low testing error that is the ability to generalize your classifier to unseen data.
 
 Optimizing c involves cross-validation, etc. Would this be a useful thing to add/pursue?
+
+### __Edits made__
+
+* __Cross Validation__: When evaluating different settings (“hyperparameters”) for estimators, such as the C setting that must be manually set for an SVM, there is still a risk of overfitting on the test set because the parameters can be tweaked until the estimator performs optimally. This way, knowledge about the test set can “leak” into the model and evaluation metrics no longer report on generalization performance. k-fold CV can be performed to fix that.
+
+* Gather __time-related statistics__ based on training with more or less number of considered visits (ie, greater than 10 or if lesser number is also enough)?
+
+* More optimizations on delta <- needs to be explored more
 
 ## Note to the mentors
 

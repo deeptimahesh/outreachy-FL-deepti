@@ -80,6 +80,8 @@ Some other variables which can be utilized without modifying any prior data coll
 
 `ruled as out of scope`
 
+* -> need to expand <-
+
 ## __Case III: Delta values__
 
 The loss function as of now tries to maximize the margin between correct classification and all other wrong classifications. This means the decision boundary (delta here) tries to be as furthest away from the nearest user-selected output.
@@ -101,8 +103,11 @@ Optimizing c involves cross-validation, etc. Would this be a useful thing to add
 ## Note to the mentors
 
 Hey!
+
 I'm Deepti Mahesh, an Outreachy applicant from India.
+
 Looking forward to learning and contributing as much as I can.
+
 Thanks!
 
 ## References

@@ -3,9 +3,23 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 import random as rand
 
+from warnings import filterwarnings
+filterwarnings('ignore')
+
 data = np.genfromtxt('data/winequality-white.csv',delimiter=';')[1:]
 X = data[:,:11]
 y = data[:,11]
+
+def flatten(X):
+    '''
+    Flatten the data into a single list
+    '''
+    X_flat = []
+
+    for x in X:
+        X_flat += list(x)
+
+    return np.array(X_flat)
 
 def normalize(X):
     '''
@@ -43,6 +57,9 @@ def svm_loss(preds, ys, delta=0):
     return loss
 
 def my_loss(preds, ys, delta = 0):
+    '''
+    Proposed Loss
+    '''
     correct = ys.argmax()
     score_correct = preds[correct]
 
@@ -53,12 +70,12 @@ def my_loss(preds, ys, delta = 0):
 
 
 X = normalize(X)
-model = LogisticRegression(fit_intercept=False)
+model = LogisticRegression(fit_intercept=False, dual=False)
 model.fit(X, y)
 
 subsets = get_subsets(data)
 
-model2 = LogisticRegression(fit_intercept=False,C=2, penalty='l2')
+model2 = LogisticRegression(fit_intercept=False,C=2, penalty='l2', dual=False)
 model2.fit(X, y)
 
 # Calculate loss
@@ -76,7 +93,7 @@ for subset in subsets:
     reg_loss.append(my_loss(my_preds, subset[:,11]))
 
 # Visualize
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(10,6))
 plt.plot(loss, label="Given loss")
 plt.plot(reg_loss, label="Regularized")
 plt.legend()

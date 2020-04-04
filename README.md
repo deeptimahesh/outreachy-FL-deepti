@@ -2,7 +2,7 @@
 
 ## A detailed look into loss functions and optimization methods
 
-I have had a thorough look into the github as well as the documentation provided for the project. With some insights as to the data collection done by Firefox as well as a revision of knowledge of SVMs, margin maximizing loss functions and other optimization methods, these are some improvements which can possibly be carried out.
+I have had a thorough look into the github as well as the documentation provided for the project and also, at community forums which helped in realizing how to approach the problem statement. With some insights as to the data collection done by Firefox as well as a revision of my knowledge of SVMs, margin maximizing loss functions and other optimization methods, these are some improvements which can possibly be carried out.
 
 The loss function used as of now remains a hinge loss for pointwise-ranking which is to be minimized:
 
@@ -16,6 +16,10 @@ The loss function used as of now remains a hinge loss for pointwise-ranking whic
             loss += max(0, pred + delta - score_correct)            
                 
         return loss
+
+        
+    - delta refers to margin between correct prediction and other possible predictions
+    - score_correct is the correct prediction
 
 ## __Case I: L2 Regularization or Ridge Regularization__
 
@@ -78,9 +82,13 @@ Some other variables which can be utilized without modifying any prior data coll
 
 ### __Edits made__
 
-`ruled as out of scope`
+`ruled as out of scope?`
 
-* -> need to expand <-
+1. __Dimensionality Reduction:__
+
+    * Additional variables such as those mentioned above can be added. However there is a disadvantage of possibly introducing too many dimensions. Moreover, as the project expands further, it is possible that some bonuses are assigned a very low weight by our model and thus, may contribute next-to-nothing to the final outcome/prediction.
+    * There are seeveral dimensionality reduction techniques which can be used such as PCA, LDA, etc. But PCA is unsupervised and may not be beneficial as it could remove a dimension which may be crucial to the desired outcome. LDA assumes that each variable is gaussian which is not the case for this problem as they are discrete.
+    * Other ways to prune variables while taking into account the weights are done manually based on analysis of results over time. As the optimization is gradient descent based, it would be easy to see and compare how weights are changed with varying parameters and input data and ultimately, decide which bonuses contribute to the desired outcome in the end.
 
 ## __Case III: Delta values__
 
